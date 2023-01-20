@@ -8,5 +8,6 @@ pizaa:require('../asstes/Image/roty.png'),
 handi:require('../asstes/Image/handi.png'),
 pudy:require('../asstes/Image/pudy.png'),
 look:require('../asstes/Icon/lock.png'),
-arow:require('../asstes/Icon/arowleft.png')
+arow:require('../asstes/Icon/arowleft.png'),
+girl:require('../asstes//Image/girl.png'),
 }

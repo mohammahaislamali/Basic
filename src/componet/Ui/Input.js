@@ -2,15 +2,17 @@ import {StyleSheet, Text, TextInput, View} from 'react-native';
 import React from 'react';
 import colors from '../../constanst/colors';
 import Paragraph from './Paragraph';
-const Input = ({input, placeholder = 'enter the name', onchange, value,error}) => {
+import { useRef } from 'react';
+const Input = ({input, placeholder = 'enter the name', onchange, value,error,style,ref}) => {
   return (
     <View>
       <TextInput
-        value={value}
-        style={styles.input}
+        value={value} ref={ref}
+        style={[styles.input,style]}
         placeholder={placeholder}
         onChangeText={onchange}>
-        {input}
+       
+        {input} 
       </TextInput>
       <Paragraph color='red'>{error}</Paragraph>
     </View>

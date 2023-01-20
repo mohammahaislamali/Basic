@@ -7,27 +7,11 @@ import StackNavigator from './StackNavigator';
 
 */
 
-const MainNavigator = () => {
-  
-    let  navigate  = React.useRef(null)
-console.log("====>",navigate.current)
-const gettoken = async()=>{
-let tokan = await AsyncStorage.getItem('Token')
-if(tokan){
- navigate.current.reset({
-index:0,
-routes:[{name:'Add'}]    
- })
-}
-
-} 
- React.useEffect(()=>{
-   gettoken()
- },
- [])
+const MainNavigator = () => { 
     return (
-        <NavigationContainer ref={navigate} >
-            <StackNavigator  />
+        <NavigationContainer >
+             <StackNavigator  /> 
+            {/* <DrawerNavigator/> */}
         </NavigationContainer>
     )
 }

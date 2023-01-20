@@ -1,4 +1,4 @@
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, View,Image} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import Paragraph from '../../componet/Ui/Paragraph';
@@ -9,42 +9,37 @@ import Loader from '../../componet/Ui/Loader';
 import ModalContainer from '../../componet/HOC/ModalContainer';
 const Home = ({navigation}) => {
   const [data, setdata] = useState([]);
-  const [loder, setloder] = useState(true);
-  const [model, setmodel] = useState(true);
+
+
   const getData = async () => {
-    let data = await fetch('https://jsonplaceholder.typicode.com/posts');
+    let data = await fetch('https://jsonplaceholder.typicode.com/albums');
     let abc = await data.json(); // deta fetch k liye
+    console.log('-------->',abc);
     setdata(abc);
-    setloder(false);
   };
   useEffect(() => {
     getData();
   }, []);
   return (
     <View style={{flex: 1}}>
-      <Loader loading={loder} />
-      <ModalContainer show={model} />
-      <Clickable onPress={() => setmodel(!model)}></Clickable>
-      <Paragraph>Home</Paragraph>
-      <Clickable onPress={() => getData}>
-        <Paragraph size={20}>getData</Paragraph>
+      <Clickable onPress={getData}>
+     <Paragraph size={50}>getData</Paragraph>
       </Clickable>
 
-      <Paragraph size={50} onPress={() => navigation.navigate('Login')}>
-        getData
-      </Paragraph>
 
       <FlatList
         data={data}
         renderItem={({item, index}) => {
+            if(item?.id%2==0){
+                return item?.id
+            }
           return (
             <Card>
               <Paragraph size={20} type="bold">
-                {item?.title}
+                {item?.id}
               </Paragraph>
-              <Paragraph size={14} type="light">
-                {item?.body}
-              </Paragraph>
+            
+              
             </Card>
           );
         }}
@@ -55,4 +50,9 @@ const Home = ({navigation}) => {
 
 export default Home;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    img:{
+        height:200,
+        width:200
+    }
+});

@@ -43,13 +43,14 @@ const Add = ({navigation}) => {
      
   return (
       <Card>
-     <Loader loading={loder}/>
+    
      <ModalContainer show={modal}/>
       <UiButton style={{marginVertical:10}} text='Logout' onPress={logeout}/>
       <UiButton text='Add' onPress={()=>navigation.navigate('First')}/>
       <Clickable onPress={()=>getdata}>
         <Paragraph size={30}>Add data</Paragraph>
       </Clickable>
+      <Loader loading={loder}/>
      <FlatList
        data={data}
        renderItem={({item,index})=>{

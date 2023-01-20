@@ -1,6 +1,7 @@
 import React from 'react'
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 import colors from '../constanst/colors';
+
 const commonOptions = {
     headerTitle: '',
     headerStyle: {
@@ -18,9 +19,19 @@ const StackNavigator = () => {
             screenOptions={{
                 // your stack style
             }}
-        >
+          initialRouteName='DrawerNavigator' >
+              <Screen
+                name='LogDrawerNavigatorin'
+                // use getComponent instead of component for better speed 
+                getComponent={() => require('./../navigatoin/DrawerNavigator').default}
+            
+                options={{
+                    ...commonOptions
+                }}
+                
+            /> 
                         
-            <Screen
+              <Screen
                 name='Login'
                 // use getComponent instead of component for better speed 
                 getComponent={() => require('../screen/after_login/Login').default}
@@ -29,11 +40,32 @@ const StackNavigator = () => {
                     ...commonOptions
                 }}
                 
-            />
-              <Screen
+            /> 
+               <Screen
                 name='SinUp'
                 // use getComponent instead of component for better speed 
                 getComponent={() => require('../screen/after_login/SinUp').default}
+            
+                options={{
+                    ...commonOptions
+                }}
+                
+            />  
+              <Screen
+                name='Otp'
+                // use getComponent instead of component for better speed 
+                getComponent={() => require('../screen/before_login/Otp').default}
+            
+                options={{
+                    ...commonOptions
+                }}
+                
+            />
+            
+            <Screen
+                name='Verfiyotp'
+                // use getComponent instead of component for better speed 
+                getComponent={() => require('../screen/before_login/Verfiyotp').default}
             
                 options={{
                     ...commonOptions
@@ -48,7 +80,7 @@ const StackNavigator = () => {
                 options={{
                     ...commonOptions
                 }} 
-            />
+            /> 
              <Screen
                 name='Add'
                 // use getComponent instead of component for better speed 
@@ -59,6 +91,15 @@ const StackNavigator = () => {
                 }}
                 
             />
+                      {/* <Screen
+                name='Validesn'
+                // use getComponent instead of component for better speed 
+                getComponent={() => require('../screen/before_login/Validesn').default}
+            
+                options={{
+                    ...commonOptions
+                }}
+            /> */}
     
              <Screen
                 name='First'
@@ -69,6 +110,24 @@ const StackNavigator = () => {
                     ...commonOptions
                 }}
                 
+            /> 
+                 <Screen
+                name='All'
+                // use getComponent instead of component for better speed 
+                getComponent={() => require('../screen/before_login/All').default}
+            
+                options={{
+                    ...commonOptions
+                }}
+            />
+                      <Screen
+                name='aaaaaaaa'
+                // use getComponent instead of component for better speed 
+                getComponent={() => require('../screen/before_login/aaaaaaaa').default}
+            
+                options={{
+                    ...commonOptions
+                }}
             />
         </Navigator>
     )

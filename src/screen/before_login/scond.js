@@ -11,9 +11,9 @@ const scond = () => {
    let ikm = await abc.json()
    setdata(ikm)
  }   
- useEffect(()=>{
- getdata()
-},[])
+  useEffect(()=>{
+  getdata()
+ },[])
   return (
     <View>
       <Clickable onPress={()=>getdata}>

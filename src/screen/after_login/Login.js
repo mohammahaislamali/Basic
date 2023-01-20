@@ -17,40 +17,76 @@ import {useState} from 'react';
 import Icon from '../../componet/Ui/Icon';
 import Card from '../../componet/Ui/Card';
 import {isValidForm, validators} from '../../constanst/validation'
+import { POST } from '../../bakend/Backend';
+import Toast from 'react-native-simple-toast'
 const Login = ({navigation}) => {
   // tokan tokan
-  let tokan= 'demo token'
-  const login =async()=>{
-  await AsyncStorage.setItem('Token',tokan)
-    navigation.reset({
-      index:0,
-      routes:[{name:'First'}]
-    })
-    
-  }
+  // let tokan= 'demo token'
+  // const login =async()=>{
+  // await AsyncStorage.setItem('Token',tokan)
+  //   navigation.reset({
+  //     index:0,
+  //     routes:[{name:'First'}]
+  //   })
+  // }
   // input value 
-  const [email, setemail] = useState('');
+  const [number, setnumber] = useState('');
   const [password, setpassword] = useState('');
   const[error,seterror]=useState({})
  
   
   const loginform =async()=>{
     const from={
-      email:validators.checkEmail('EMAIL',email),
-      password:validators.checkNumber('PASSWORD',password)
+      number:validators.checkNumber('mobile_number',number),
+      password:validators.checkPassword('password',password)
    
      }
      seterror(from)
     if(isValidForm(from)){
+     let body= {
+      mobile_number:number,
       
+      device_information: {
+        device_id: "12345",
+        os_name: "Android",
+        model_name: "SM-M307F",
+        os_version: "10",
+        app_version: "1.3.0",
+        manufacturer: "samsung",
+        total_memory: "5860327424",
+        fcm_token: "1234"
     }
+     }
+      console.warn('body===>',body)
+    POST(
+    'http://54.144.109.80:5000/api/v1/login',
+    body,
+    {'authorization': 'Basic YWRtaW46YWRtaW4='},
+    res=>{
+       if(res?.ok){
+          navigation.navigate('Home')
+       }else{
+        Toast.showWithGravity(res.message, Toast.LONG, Toast.BOTTOM);
+       }
+      console.log('res==>',res) 
+      
+    },
+   
+    err=>{
+      console.log('err===>',err)
+    },
+    fail=>{
+     console.log('fail ===>',fail)
+    }
+    )
+   //  navigation.navigate('Otp',{mobile_number})
+    }
+   
   }
-  useEffect(()=>{
-    loginform()
-  },)
+   
 
   return (
-    <View>
+    <View style={{flex:1}}>
       <View style={styles.mainbox}>
         <View>
           <Image style={styles.mixxchaimin} source={icons.mixxchaimin} />
@@ -64,10 +100,10 @@ const Login = ({navigation}) => {
           {/* <Paragraph>{email}</Paragraph>
         <Paragraph>{password}</Paragraph> */}
           <View>
-            <View style={{alignSelf: 'flex-end'}}>
+            {/* <View style={{alignSelf: 'flex-end'}}>
               <Icon style={styles.icon} source={icons.look} />
-            </View>
-            <Input onchange={t => setemail(t)} placeholder="enter the email"  error={error?.email}/>
+            </View> */}
+            <Input onchange={t => setnumber(t)} placeholder="enter the mobail number"  error={error?.number}/>
           </View>
 
           <View>
@@ -76,6 +112,7 @@ const Login = ({navigation}) => {
               placeholder="enter the password" error={error?.password}
             />
           </View>
+          <Clickable >
           <Paragraph
             style={{margin: 10}}
             color="red"
@@ -83,9 +120,10 @@ const Login = ({navigation}) => {
             textAlign="right">
             forgot password ?
           </Paragraph>
+          </Clickable>
         </View>
         <View style={styles.or}>
-          <Clickable>
+          <Clickable onPress={()=>navigation.navigate('SinUp')}>
              <Paragraph color="white">OR</Paragraph>
             </Clickable>
 
@@ -93,7 +131,7 @@ const Login = ({navigation}) => {
         <View style={styles.inputbox}>
           <View>
             <UiButton
-           onPress={()=>navigation.navigate('SinUp')}
+           onPress={()=>loginform()}
               style={styles.buttan}
               txtSize={30}
               text="Login"
@@ -101,8 +139,10 @@ const Login = ({navigation}) => {
             />
           </View>
           <View>
-            <Paragraph color="gray" style={{marginVertical: 10}}>
-              Dont’t have an account ? Register
+            <Paragraph color="gray" >
+              Dont’t have an account ?<Clickable onPress={()=>navigation.navigate('SinUp')}>
+             <Paragraph>Register</Paragraph>
+            </Clickable>
             </Paragraph>
           </View>
         </View>
@@ -120,6 +160,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: FULL_WIDTH,
     backgroundColor: colors.pink,
+    borderBottomStartRadius:50
   },
   loginform: {
     height: FULL_HEIGHT,
